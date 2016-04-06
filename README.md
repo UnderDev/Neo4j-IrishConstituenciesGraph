@@ -30,6 +30,15 @@ Once the .CSV files were created, they were then read in using the queries below
 The queries above read in the .csv file listed line by line seperating the data by commas into two nodes, one called Candidates and the other Constituencies with the 
 proprities listed above.
 
+Once all the Constituency and Candidates nodes were set up, i created a relationship between them called "RAN_IN" 
+to display what candidate ran in what Constituency with the Cypher Querie Below.
+
+```Cypher
+	MATCH (a:Candidates),(b:Constituency)
+	WHERE a.Constituency =~ b.Name
+	CREATE (a)-[:RAN_IN]->(b)
+```
+
 
 
 ## Queries
