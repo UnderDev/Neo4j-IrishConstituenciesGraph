@@ -40,6 +40,19 @@ to display what candidate ran in what Constituency with the Cypher Querie Below.
 ```
 
 
+####Other Queries used during set up were,
+
+1. This query finds the Constituency with the Highest Number (Max()) of candidates running in its Constituency, Then
+finds the Constituency that matches that Node with the highest Running Candidates.
+
+```Cypher
+	MATCH (b:Constituency)
+	WITH MAX(b.Running) as r
+	match(c:Constituency)
+	where c.Running = r
+	Return c
+```
+
 
 ## Queries
 The 3 queries iv picked for this project are:
@@ -59,16 +72,23 @@ This query retrives the Party with the youngest number of running candidates.
 
 ```
 
+
 #### Constituency With the Most amount of elected Females.
 This query retrives the Constituency with the most amount of elected Female Candidates.
 ```cypher
 
 ```
 
+
 #### Constituency With the most amount of Candidates Running.
 This query retreives the Constituency with the most amount of Candidates running in the election.
-```cypher
 
+```cypher
+	MATCH (b:Constituency)
+	WITH MAX(b.Running) as r
+	match(c:Constituency)
+	where c.Running = r
+	Return c
 ```
 
 ## References

@@ -3,7 +3,8 @@
 // in comments.
 
 
-MATCH
-	(n)
-RETURN
-	n;
+MATCH (b:Constituency)
+WITH MAX(b.Running) as r
+match(c:Constituency)
+where c.Running = r
+Return c

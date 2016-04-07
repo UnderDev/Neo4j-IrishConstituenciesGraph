@@ -14,6 +14,6 @@ CREATE (a:Candidates { Name: line[0], Age: line[1], Party: line[2]
 
 //Set up the relationships between Candidates and constituencies by the Properity: Constituency
 MATCH (a:Candidates),(b:Constituency)
-WHERE a.Constituency = b.Name
+WHERE a.Constituency =~ b.Name
 CREATE (a)-[:RAN_IN]->(b)
-RETURN a,b;
+
