@@ -8,10 +8,9 @@ It contains all the candidates with their details that ran in the election and a
 The objective was to first create the database with all the information and Queries it using cypher Queries to get interesting information about the election.
 
 ## Database
-Explain how you created your database, and how information is represented in it.
+Explain how you created your database, and how information is represented in it.*********
 The database was created using a .CSV file which I altered and added data to.
-
-There are two files added to the project, one with Constituencies and the other with Candidates.
+There are three files added to the project, one with Constituencies another with Candidates and the last one Party's.
 
 Once the .CSV files were created, they were then read in using the queries below.
 
@@ -27,31 +26,39 @@ Once the .CSV files were created, they were then read in using the queries below
 	CREATE (a: Constituency {Name: line [0], Seats: line [1]})
 ```
 
-The queries above read in the .csv file listed line by line separating the data by commas into two nodes, one called Candidates and the other Constituencies with the 
-proprities listed above.
+```Cypher
+	LOAD CSV FROM 'file:///Users/scott/Desktop/Party.csv' AS line
+	CREATE (a: Party {Name: line [0]})
+```
 
-Once all the Constituency and Candidates nodes were set up, i created a relationship between them called "RAN_IN" 
-To display what candidate ran in what Constituency. The Where clause matches the Candidates Constituency with the Constituencies Name.
+The queries above read in the .csv file listed line by line separating the data by commas into three nodes,Candidates, Constituencies and Party with the 
+proprities listed above after the Create Statment.
 
+###Relationships
+Once all the Constituency,Candidates and Party nodes were set up, i created a relationship between Constituency/Candidates called "RAN_IN" and 
+another relationship between Candidates/Party called "IS_A_MEMBER_OF".
+
+The Relationships are created with the following Queries below;
+
+RAN_IN Relationship
 ```Cypher
 	MATCH (a:Candidates),(b:Constituency)
 	WHERE a.Constituency =~ b.Name
 	CREATE (a)-[:RAN_IN] -> (b)
 ```
 
-
-####Other Queries used during set up were,
-
-1. This Query Loads all the parties from the .CSV file into a node called Party with the name as a property.
-
+IS_A_MEMBER_OF Relationship
 ```Cypher
-	LOAD CSV FROM 'file:///Users/scott/Desktop/Parties.csv' AS line
-	CREATE (a: Party {Name: line [0]})
-	Return a
+	MATCH (a:Candidates),(b:Party)
+	WHERE a.Party =~ b.Name
+	CREATE (a)-[:IS_A_MEMBER_OF]->(b)
+	RETURN a,b;
 ```
 
 
-2. This query gets the total number of candidates running in each constituency and creates a propriety called Running with the Total as the value.
+###Other Queries used during set up were
+
+1. This query gets the total number of candidates running in each constituency and creates a propriety called Running with the Total as the value.
 
 ```Cypher
 	MATCH (a:Candidates)-[r:RAN_IN]->(b:Constituency)
