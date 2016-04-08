@@ -3,61 +3,70 @@
 
 ## Introduction
 The following project is a neo4j Graph Database containing data about the 2016 Irish election.
-It contains all the candidates with there details that ran in the election and all the constituencies/seats available.
+It contains all the candidates with their details that ran in the election and all the constituencies/seats available.
 
-The objective was to first create the database with all the information and Querie it using cypher Queries to get interesting information about the election.
+The objective was to first create the database with all the information and Queries it using cypher Queries to get interesting information about the election.
 
 ## Database
 Explain how you created your database, and how information is represented in it.
-The database was created using a .CSV file which i altered and added data to once gathered from reliable sources.
+The database was created using a .CSV file which I altered and added data to.
 
-There were two files added to the project, one with Constituencies and the other with Candidates.
+There are two files added to the project, one with Constituencies and the other with Candidates.
 
 Once the .CSV files were created, they were then read in using the queries below.
 
 ```Cypher
 	LOAD CSV FROM 'file:///Users/scott/Desktop/Candidates.csv' AS line
-	CREATE (a:Candidates { Name: line[0], Age: line[1], Party: line[2]
-	, Constituency: line[3] , CurrentTD: line[4] , Gender: line[6] 
-	, PhoneNo: line[5]})
+	CREATE (a: Candidates {Name: line [0], Age: line [1], Party: line [2]
+	, Constituency: line [3], CurrentTD: line [4], Gender: line [6] 
+	, PhoneNo: line [5]})
 ```
 
 ```Cypher
 	LOAD CSV FROM 'file:///Users/scott/Desktop/Constituencies.csv' AS line
-	CREATE (a:Constituency {Name: line[0],Seats: line[1]})
+	CREATE (a: Constituency {Name: line [0], Seats: line [1]})
 ```
 
-The queries above read in the .csv file listed line by line seperating the data by commas into two nodes, one called Candidates and the other Constituencies with the 
+The queries above read in the .csv file listed line by line separating the data by commas into two nodes, one called Candidates and the other Constituencies with the 
 proprities listed above.
 
 Once all the Constituency and Candidates nodes were set up, i created a relationship between them called "RAN_IN" 
-to display what candidate ran in what Constituency with the Cypher Querie Below.
+To display what candidate ran in what Constituency. The Where clause matches the Candidates Constituency with the Constituencies Name.
 
 ```Cypher
 	MATCH (a:Candidates),(b:Constituency)
 	WHERE a.Constituency =~ b.Name
-	CREATE (a)-[:RAN_IN]->(b)
+	CREATE (a)-[:RAN_IN] -> (b)
 ```
 
 
 ####Other Queries used during set up were,
 
-1. This query gets the total numner of candidates running in each constituency and creates a propriety called Running with the Total as the value
+1. This Query Loads all the parties from the .CSV file into a node called Party with the name as a property.
+
+```Cypher
+	LOAD CSV FROM 'file:///Users/scott/Desktop/Parties.csv' AS line
+	CREATE (a: Party {Name: line [0]})
+	Return a
+```
+
+
+2. This query gets the total number of candidates running in each constituency and creates a propriety called Running with the Total as the value.
 
 ```Cypher
 	MATCH (a:Candidates)-[r:RAN_IN]->(b:Constituency)
-	where b.Name = a.Constituency
-	WITH b, count(*) as Run
-	SET b.Running = Run
+	Where a.Constituency = b.Name 
+	WITH b, count (*) as total
+	SET b.Running = total
 	Return b
 
 ```
 
 
 ## Queries
-The 3 queries iv picked for this project are:
+The 3 queries I’ve picked for this project are:
 1. Party With The Youngest Age Group
-	This Querie Counts all the candidates under the age of 30 in each party and returns the Party with the highest amount of "Young Guns" in it.
+	This query Counts all the candidates under the age of 30 in each party and returns the Party with the highest amount of "Young Guns" in it.
 	
 2. Constituency With the Most amount of elected Females.
 	This query searches through all the candidates for females that were elected and returns the Constituency with the highest amount. 
@@ -67,24 +76,33 @@ The 3 queries iv picked for this project are:
 
 
 #### Party With The Youngest Age Group
-This query retrives the Party with the youngest number of running candidates.
-```cypher
 
+This query retrieves the Party with the highest amount of candidates under the age of 30.
+```cypher
+	MATCH (a: Candidates)
+		WHERE a.Age < "30"
+	Match (b:Party)
+		where b.Name = a.Party
+		WITH b, COUNT(b) as total, collect(a) as coll
+		ORDER BY total DESC 
+		LIMIT 1
+		Unwind coll as z
+	RETURN b,z
 ```
 
 
 #### Constituency With the Most amount of elected Females.
-This query retrives the Constituency with the most amount of elected Female Candidates.
+This query retrieves the Constituency with the most amount of elected Female Candidates.
 
 ```cypher
-	MATCH (a:Candidates)-[r:RAN_IN]->(b:Constituency)
-	where a.Gender ="Female" and a.CurrentTD="Yes"
+	MATCH (a: Candidates)-[r:RAN_IN]->(b:Constituency)
+		where a.Gender ="Female" and a.CurrentTD="Yes"
 	WITH a, COUNT(a) as total, collect(b) as coll
-	ORDER BY numCan DESC 
-	LIMIT 1
-	unwind total as z
+		ORDER BY total DESC 
+		LIMIT 1
+		unwind total as z
 	MATCH (c:Candidates)
-	where c.Constituency = z.Name and c.Gender = "Female"
+		where c.Constituency = z.Name and c.Gender = "Female"
 	return z,c
 ```
 
@@ -94,9 +112,9 @@ This query retreives the Constituency with the most amount of Candidates running
 
 ```cypher
 	MATCH (b:Constituency)
-	WITH MAX(b.Running) as r
+		WITH MAX(b.Running) as r
 	match(c:Constituency)
-	where c.Running = r
+		where c.Running = r
 	Return c
 ```
 
@@ -105,3 +123,4 @@ This query retreives the Constituency with the most amount of Candidates running
 2. http://www.thejournal.ie/election-2016/party/ Used to get Ages and info for each candidate.
 3. https://github.com/storyful/irish-elections/tree/master/db/data Used to get Names/Constituencies and initial set up of .csv file.
 4. http://neo4j.com/docs/stable/query-load-csv.html Used to find out how to load data from a csv file into neo4j.
+5. http://semanticommunity.info/@api/deki/files/25765/Neo4j_CheatSheet_v3.pdf, Cypher Cheat Sheet
