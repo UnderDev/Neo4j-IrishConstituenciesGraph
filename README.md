@@ -10,6 +10,9 @@ The objective was to first create the database with all the information and Quer
 ## Database
 The database was created using a .CSV file which I altered and added data to.
 There are three files added to the project, one with Constituencies another with Candidates and the last one Party's.
+To Run the queries below that create the database, you will need to change the path in the query to where ever you have the Associated file, 
+from the queries listed below, i have loacted my 3 files(Candidates,Constituency,Party) on the desktop. A copy of these file are located in the the folder
+called Supports.
 
 Once the .CSV files were created, they were then read in using the queries below.
 
@@ -123,6 +126,12 @@ This query retreives the Constituency with the most amount of Candidates running
 		where c.Running = r
 	Return c
 ```
+
+#### Running the queries.
+To set up the database and run all the queries, start from the top and copy and past them into neo4j. 
+
+
+
 
 ## References
 1. [Neo4J website](http://neo4j.com/), the website of the Neo4j database.
