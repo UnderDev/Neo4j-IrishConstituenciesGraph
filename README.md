@@ -51,7 +51,6 @@ IS_A_MEMBER_OF Relationship
 	MATCH (a:Candidates),(b:Party)
 	WHERE a.Party =~ b.Name
 	CREATE (a)-[:IS_A_MEMBER_OF]->(b)
-	RETURN a,b;
 ```
 
 
@@ -107,7 +106,7 @@ This query retrieves the Constituency with the most amount of elected Female Can
 	WITH a, COUNT(a) as total, collect(b) as coll
 		ORDER BY total DESC 
 		LIMIT 1
-		unwind total as z
+		unwind coll as z
 	MATCH (c:Candidates)
 		where c.Constituency = z.Name and c.Gender = "Female"
 	return z,c
