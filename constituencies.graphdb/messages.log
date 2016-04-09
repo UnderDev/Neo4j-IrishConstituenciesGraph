@@ -2829,3 +2829,16 @@ Storage files: (filename : modification date - size)
 2016-04-09 19:41:48.650+0000 INFO  [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by scheduler for time threshold [109]:  Check pointing completed
 2016-04-09 19:41:48.652+0000 INFO  [o.n.k.i.t.l.p.LogPruningImpl] Log Rotation [0]:  Starting log pruning.
 2016-04-09 19:41:48.654+0000 INFO  [o.n.k.i.t.l.p.LogPruningImpl] Log Rotation [0]:  Log pruning complete.
+2016-04-09 19:44:27.850+0000 INFO  [o.n.k.i.f.GraphDatabaseFacade] Shutdown started
+2016-04-09 19:44:27.852+0000 INFO  [o.n.k.i.f.CommunityFacadeFactory] Database is now unavailable
+2016-04-09 19:44:27.899+0000 INFO  [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [109]:  Starting check pointing...
+2016-04-09 19:44:27.905+0000 INFO  [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [109]:  Starting store flush...
+2016-04-09 19:44:27.921+0000 INFO  [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [109]:  Store flush completed
+2016-04-09 19:44:27.924+0000 INFO  [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [109]:  Starting appending check point entry into the tx log...
+2016-04-09 19:44:27.940+0000 INFO  [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [109]:  Appending check point entry into the tx log completed
+2016-04-09 19:44:27.942+0000 INFO  [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [109]:  Check pointing completed
+2016-04-09 19:44:27.944+0000 INFO  [o.n.k.i.t.l.p.LogPruningImpl] Log Rotation [0]:  Starting log pruning.
+2016-04-09 19:44:27.946+0000 INFO  [o.n.k.i.t.l.p.LogPruningImpl] Log Rotation [0]:  Log pruning complete.
+2016-04-09 19:44:29.096+0000 INFO  [o.n.k.NeoStoreDataSource] NeoStores closed
+2016-04-09 19:44:29.099+0000 INFO  [o.n.k.i.DiagnosticsManager] --- STOPPING diagnostics START ---
+2016-04-09 19:44:29.099+0000 INFO  [o.n.k.i.DiagnosticsManager] --- STOPPING diagnostics END ---
