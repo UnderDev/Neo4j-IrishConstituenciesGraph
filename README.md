@@ -10,6 +10,7 @@ The objective was to first create the database with all the information and Quer
 ## Database
 The database was created using a .CSV file which I altered and added data to.
 There are three files added to the project, one with Constituencies another with Candidates and the last one Party's.
+
 To Run the queries below that create the database, you will need to change the path in the query to where ever you have the Associated file, 
 from the queries listed below, i have loacted my 3 files(Candidates,Constituency,Party) on the desktop. A copy of these file are located in the the folder
 called Supports.
