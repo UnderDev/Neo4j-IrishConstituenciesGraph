@@ -1,5 +1,5 @@
 // The following Query First finds all candidates under the age of 30. Then finds all the parties thoes candidates are a member of.
-// Once all the parties are found. it counts all the Party Nodes and creates a collection of Candidate nodes.
+// Once all the parties are found. It counts all the Party Nodes and creates a collection of Candidate nodes.
 // It is then ordered in DESC and limited to 1 as we only want the top result
 
 	MATCH (a: Candidates)

@@ -8,7 +8,6 @@ It contains all the candidates with their details that ran in the election and a
 The objective was to first create the database with all the information and Queries it using cypher Queries to get interesting information about the election.
 
 ## Database
-Explain how you created your database, and how information is represented in it.*********
 The database was created using a .CSV file which I altered and added data to.
 There are three files added to the project, one with Constituencies another with Candidates and the last one Party's.
 
@@ -72,6 +71,7 @@ IS_A_MEMBER_OF Relationship
 
 ## Queries
 The 3 queries I’ve picked for this project are:
+
 1. Party With The Youngest Age Group
 	This query Counts all the candidates under the age of 30 in each party and returns the Party with the highest amount of "Young Guns" in it.
 	
