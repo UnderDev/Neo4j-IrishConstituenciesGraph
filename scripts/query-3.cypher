@@ -1,9 +1,10 @@
-// Describe your query
-// at the start
-// in comments.
+//The Following Query looks for the Constituency with the highest number of candidates running in
+//that Constituency and saves it in total. Once the total is found it finds the Constituency with that total.
 
-
-MATCH
-	(n)
-RETURN
-	n;
+```Cypher
+	MATCH (b:Constituency)
+	WITH MAX(b.Running) as total
+	match(c:Constituency)
+	where c.Running = total
+	Return c
+```
